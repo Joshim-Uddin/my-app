@@ -25,7 +25,7 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(getData)} className="space-y-4 flex flex-col">
+    <form onSubmit={handleSubmit(getData)} className="space-y-4 flex flex-col bg-white text-black p-10 shadow-lg shadow-black">
       <div className='w-full'>
         <label htmlFor="name">Name </label>
         <input
