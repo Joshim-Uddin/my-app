@@ -1,5 +1,5 @@
 // components/Table.tsx
-
+'use client';
 import { useStore } from "./store";
 
 
