@@ -7,7 +7,7 @@ const Table = () => {
   const { formData } = useStore();
 
   return (
-    <table className="table-auto mx-auto bg-white text-black p-10 shadow-md shadow-blue-400">
+    <table className="table-auto mx-auto bg-white text-black p-10 shadow-md shadow-blue-400 rounded-lg">
       <thead>
         <tr>
           <th className="px-4 py-2">Name</th>

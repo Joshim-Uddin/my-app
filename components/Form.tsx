@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useStore } from './store';
 import { useForm } from 'react-hook-form';
 import { data } from 'autoprefixer';
+import Swal from 'sweetalert2';
 
 
 const Form = () => {
@@ -21,22 +22,31 @@ const Form = () => {
       setEmail('');
       setAge('');
     }
+    Swal.fire({
+      icon: 'success',
+      title: 'Submitted successfully',
+      showConfirmButton: false,
+      timer: 1500
+    })
     reset()
   };
 
   return (
-    <form onSubmit={handleSubmit(getData)} className="space-y-4 flex flex-col bg-white text-black p-10 shadow-lg shadow-black">
+    <form onSubmit={handleSubmit(getData)} className="space-y-4 flex flex-col bg-white text-black p-10 shadow-lg shadow-black rounded-lg">
       <div className='w-full'>
         <label htmlFor="name">Name </label>
         <input
           type="text"
           id="name"
-          {...register("name", { required: true })}
+          {...register("name", { required: true, pattern: /^[a-zA-Z ]*$/})}
           onChange={(e) => setName(e.target.value)}
           className="border border-gray-300 p-2 w-full text-black"
         />
-        {errors.name && (
+        {errors.name?.type==='required' && (
                   <p className="text-red-600">Name is Required</p>
+                )}
+        {errors.name?.type==='pattern' && (
+                  <p className="text-red-600">Enter a valid Name</p>
                 )}
       </div>
       <div className='w-full'>

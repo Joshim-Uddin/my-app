@@ -25,3 +25,13 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+/* styles/globals.css */
+.dark {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.light {
+  background-color: #000061;
+  color: #ffffff;
+}
