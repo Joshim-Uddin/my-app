@@ -2,6 +2,8 @@
 "use client";
 import { useState } from 'react';
 import { useStore } from './store';
+import { useForm } from 'react-hook-form';
+import { data } from 'autoprefixer';
 
 
 const Form = () => {
@@ -10,50 +12,66 @@ const Form = () => {
   const [age, setAge] = useState('');
 
   const { addFormData } = useStore()
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const getData = () => {
     if (name && email && age) {
       addFormData({ name, email, age: parseInt(age) });
       setName('');
       setEmail('');
       setAge('');
     }
+    reset()
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label htmlFor="name">Name:</label>
+    <form onSubmit={handleSubmit(getData)} className="space-y-4 flex flex-col">
+      <div className='w-full'>
+        <label htmlFor="name">Name </label>
         <input
           type="text"
           id="name"
-          value={name}
+          {...register("name", { required: true })}
           onChange={(e) => setName(e.target.value)}
-          className="border border-gray-300 p-2"
+          className="border border-gray-300 p-2 w-full text-black"
         />
+        {errors.name && (
+                  <p className="text-red-600">Name is Required</p>
+                )}
       </div>
-      <div>
-        <label htmlFor="email">Email:</label>
+      <div className='w-full'>
+        <label htmlFor="email">Email </label>
         <input
-          type="email"
+          type="text"
           id="email"
-          value={email}
+          {...register("email", { required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })}
           onChange={(e) => setEmail(e.target.value)}
-          className="border border-gray-300 p-2"
+          className="border border-gray-300 p-2 w-full text-black"
         />
+        {errors.email?.type==='required' && (
+                  <p className="text-red-600">Email is Required</p>
+                )}
+        {errors.email?.type==='pattern' && (
+                  <p className="text-red-600">Enter a valid Email</p>
+                )}
       </div>
       <div>
-        <label htmlFor="age">Age:</label>
+        <label htmlFor="age">Age </label>
         <input
-          type="number"
+          type="text"
           id="age"
-          value={age}
+          {...register("age", { required: true, pattern:/^([1-9]\d*)$/ })}
           onChange={(e) => setAge(e.target.value)}
-          className="border border-gray-300 p-2"
+          className="border border-gray-300 p-2 w-full text-black"
         />
+        {errors.age?.type==='required' && (
+                  <p className="text-red-600">Age is Required</p>
+                )}
+        {errors.age?.type==='pattern' && (
+                  <p className="text-red-600">Enter a valid Age</p>
+                )}
       </div>
-      <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
+      <button type="submit" className="bg-amber-600 text-white py-2 px-4 rounded w-2/4 mx-auto">
         Submit
       </button>
     </form>
